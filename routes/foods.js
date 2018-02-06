@@ -23,4 +23,19 @@ router.get('/:id', function(req, res, next) {
       }
     });
 });
+
+router.post('/', function(req, res, next) {
+  let name = req.body['food']['name'];
+  let calories = req.body['food']['calories'];
+  if (name && calories) {
+    database.raw('INSERT INTO foods (name, calories, created_at) VALUES(?, ?, ?) RETURNING *', [name, calories, new Date])
+      .then(function(created) {
+        if (created) {
+          return res.status(200).json(created);
+        } else {
+          return res.status(400);
+        }
+      });
+  };
+});
 module.exports = router;
