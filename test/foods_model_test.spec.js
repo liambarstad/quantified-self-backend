@@ -1,9 +1,8 @@
-const pry = require('pryjs')
 const chai = require('chai')
 const should = chai.should()
 const Foods = require('../models/foods')
-const environment = process.env.NODE_ENV || 'development'
-const configuration = require('../knexfile')[environment]
+//const environment = process.env.NODE_ENV || 'development'
+const configuration = require('../knexfile').test
 const database = require('knex')(configuration)
 
 describe('Foods Model Tests', () => {
@@ -16,7 +15,6 @@ describe('Foods Model Tests', () => {
   })
 
   beforeEach((done) => {
-    //database('foods').truncate()
     database.seed.run()
       .then(() => done())
       .catch(error => {
@@ -28,7 +26,7 @@ describe('Foods Model Tests', () => {
     Foods.getAll()
       .then(foods => {
         foods.should.be.a('array')
-        foods.length.should.equal(13)
+        foods.length.should.equal(3)
         foods[0].should.have.property('id')
         foods[0].should.have.property('name')
         foods[0].should.have.property('calories')
