@@ -1,8 +1,8 @@
 const build_response = (result, response, config = { stat: 200, err_code: 404 }) => {
   if (result) {
-    return result.status(config.stat).json(result['rows'])
+    return response.status(config.stat).json(result['rows'])
   } else {
-    return result.status(config.err_code)
+    return response.status(config.err_code)
   }
 }
 

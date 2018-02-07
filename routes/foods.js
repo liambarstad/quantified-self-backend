@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     .then(result => {
       return build_response(result, res)
     })
-    .catch(error => { throw error })
+    .catch(error => { return error })
 })
 
 router.post('/', function(req, res, next) {
@@ -19,7 +19,7 @@ router.post('/', function(req, res, next) {
       .then(created => {
         return build_response(created, res, {err_code: 400})
       })
-      .catch(error => { throw error })
+      .catch(error => { return error })
 })
 
 router.get('/:id', function(req, res, next) {
@@ -27,7 +27,7 @@ router.get('/:id', function(req, res, next) {
     .then(result => {
       return build_response(result, res)[0]
     })
-    .catch(error => { throw error })
+    .catch(error => { return error })
 })
 
 router.patch('/:id', function(req, res, next) {
@@ -39,7 +39,7 @@ router.patch('/:id', function(req, res, next) {
     .then(changed => {
       return build_response(changed, res, {err_code: 400})
     })
-    .catch(error => { throw error })
+    .catch(error => { return error })
 })
 
 router.delete('/:id', function(req, res, next) {
@@ -47,7 +47,7 @@ router.delete('/:id', function(req, res, next) {
     .then(deleted => {
       return build_response(deleted, res)
     })
-    .catch(error => { throw error })
+    .catch(error => { return error })
 });
 
 module.exports = router;
