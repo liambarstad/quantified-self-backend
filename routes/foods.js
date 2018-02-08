@@ -4,9 +4,10 @@ const Foods = require('../models/foods')
 const build_response = require('../helpers/response_helper').build_response
 
 router.get('/', function(req, res, next) {
-  Foods.getAll().build_response()
+  Foods.getAll()
     .then(result => {
-      return build_response(result, res)
+      res.status(200).json(result)
+      //return build_response(result, res)
     })
     .catch(error => { return error })
 })

@@ -1,7 +1,7 @@
+const pry = require('pryjs')
 const chai = require('chai')
 const should = chai.should()
 const Foods = require('../models/foods')
-//const environment = process.env.NODE_ENV || 'development'
 const configuration = require('../knexfile').test
 const database = require('knex')(configuration)
 
@@ -34,18 +34,56 @@ describe('Foods Model Tests', () => {
   })
 
   it('can get a single food', () => {
-
+    Foods.get(1)
+      .then(food => {
+        food.should.be.a('object')
+        food.should.have.property('id')
+        food.should.have.property('name')
+        food.should.have.property('calories')
+      })
   })
 
   it('can create a new food', () => {
-
+    Foods.post('newFood', 600)
+      .then(food => {
+        food.should.be.a('object')
+        food.should.have.property('id')
+        food.should.have.property('name')
+        food.should.have.property('calories')
+        food.id.should.be.a('number')
+        food.name.should.equal('newFood')
+        food.calories.should.equal(600)
+        Foods.get(food.id)
+          .then(food2 => {
+            food2.should.have.property('name')
+            food2.should.have.property('calories')
+            food2.name.should.equal('newFood')
+            food2.calories.should.equal(600)
+          })
+      })
   })
 
   it('can update a food', () => {
-
+    Foods.update(1, 'newVersion', 700)
+      .then(food => {
+        food.should.be.a('object')
+        food.should.have.property('id')
+        food.should.have.property('name')
+        food.should.have.property('calories')
+        food.id.should.equal(1)
+        food.name.should.equal('newVersion')
+        food.calories.should.equal(700)
+      })
   })
 
   it('can delete a food', () => {
-
+    Foods.destroy(2)
+      .then(food => {
+        food.should.be.a('object')
+        food.should.have.property('id')
+        food.should.have.property('name')
+        food.should.have.property('calories')
+        food.id.should.equal(2)
+      })
   })
 })
