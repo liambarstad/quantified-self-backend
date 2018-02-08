@@ -28,6 +28,7 @@ const update = (id, name, calories) => {
 
 const destroy = (id) => {
   return database('foods').returning('*').where('id', id).del()
+    .then(result => result[0])
 }
 
 module.exports = { getAll, get, post, update, destroy }

@@ -1,5 +1,5 @@
 const chai = require('chai')
-const should = chai.should
+const should = chai.should()
 const chaiHttp = require('chai-http')
 const app = require('../app')
 const configuration = require('../knexfile').test
@@ -28,7 +28,7 @@ describe('Foods API Routes', () => {
     it('with correct path', () => {
       return chai.request(app)
         .get('/api/v1/foods')
-        .then((response) => {
+        .then(response => {
           response.should.have.status(200)
           response.body.should.be.a('array')
           response.body.length.should.equal(3)
