@@ -1,0 +1,35 @@
+const environment = process.env.NODE_ENV || 'development'
+const configuration = require('../knexfile')[environment]
+const database = require('knex')(configuration)
+
+class Meals{
+
+  static mealsFoods(id) {
+    return database.raw(
+      'SELECT * FROM foods' +
+      ' INNER JOIN meal_foods ON foods.id = meal_foods.food' +
+      ' WHERE meal_foods.meal = ?', [id]
+    )
+  }
+
+  static deleteFood(meal_id, food_id) {
+    return database.raw("DELETE FROM meal_foods WHERE ctid = (SELECT ctid FROM meal_foods WHERE meal_foods.food = ? AND meal_foods.meal = ? LIMIT 1)",
+      [food_id, meal_id]
+    )
+  };
+
+  static allMeals() {
+    return database.raw(
+      'SELECT m.id, m.name, json_agg((SELECT row_to_json(x.*) FROM (SELECT f.id, f.name, f.calories) x)) AS foods FROM meals m LEFT OUTER JOIN meal_foods mf ON mf.meal = m.id LEFT OUTER JOIN foods f ON f.id = mf.food GROUP BY m.id'
+    )
+  }
+
+  static addFood(meal_id, food_id) {
+    return database.raw(
+      'INSERT INTO meal_foods (meal, food, created_at) VALUES (?, ?, ?) RETURNING id',
+      [meal_id, food_id, new Date]
+    )
+  }
+}
+
+module.exports = Meals

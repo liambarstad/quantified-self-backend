@@ -1,26 +1,20 @@
-var addFood = function(knex, name, calories) {
-  return knex.raw(
-      `INSERT INTO foods (name, calories, created_at) VALUES (?, ?, ?)`, [name, calories, new Date]
-      )
-}
-
-exports.seed = function(knex, Promise) {
-  return knex.raw('TRUNCATE foods RESTART IDENTITY')
-    .then(function () {
-      return Promise.all([
-        addFood(knex, 'Chicken Burrito', 800),
-        addFood(knex, 'Grapes', 180),
-        addFood(knex, 'Blueberry Muffins', 450),
-        addFood(knex, 'Yogurt', 550),
-        addFood(knex, 'Macaroni and Cheese', 950),
-        addFood(knex, 'Granola Bar', 200),
-        addFood(knex, 'Gum', 50),
-        addFood(knex, 'Cheese', 400),
-        addFood(knex, 'Banana', 150),
-        addFood(knex, 'Fruit Snack', 120),
-        addFood(knex, 'Watermelon', 20),
-        addFood(knex, 'Apple', 50),
-        addFood(knex, 'Bagel Bites', 300)
+exports.seed = (knex, Promise) => {
+  return knex('foods').truncate()
+    .then(() => {
+      return knex('foods').insert([
+        {name: 'Chicken Burrito', calories: 800, created_at: new Date},
+        {name: 'Grapes', calories: 180, created_at: new Date},
+        {name: 'Blueberry Muffin', calories: 450, created_at: new Date},
+        {name: 'Yogurt', calories: 550, created_at: new Date},
+        {name: 'Macaroni and Cheese', calories: 950, created_at: new Date},
+        {name: 'Granola Bar', calories: 200, created_at: new Date},
+        {name: 'Gum', calories: 50, created_at: new Date},
+        {name: 'Cheese', calories: 400, created_at: new Date},
+        {name: 'Banana', calories: 150, created_at: new Date},
+        {name: 'Fruit Snack', calories: 120, created_at: new Date},
+        {name: 'Watermelon', calories: 20, created_at: new Date},
+        {name: 'Apple', calories: 50, created_at: new Date},
+        {name: 'Bagel Bites', calories: 300, created_at: new Date}
       ]);
     });
 };
