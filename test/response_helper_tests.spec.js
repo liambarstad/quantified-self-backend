@@ -1,29 +1,14 @@
 const pry = require('pryjs')
 const chai = require('chai')
 const should = chai.should()
+const res = require('./test_helpers/response_mock')
 const ResponseHelper = require('../helpers/response_helper')
 const Foods = require('../models/foods')
 
 describe('Helper Tests', () => {
 
   it('with valid promise', () => {
-    class Res {
-      constructor() {
-        this.stat = 'you done goofed'
-        this.body = 'done goofed up hard'
-      }
-      status(num) {
-        this.stat = num
-        return this
-      }
-      json(val) {
-        this.body = val
-        return this
-      }
-    }
-
-    let response_helper = new ResponseHelper
-    let res = new Res()
+    let response_helper = new ResponseHelper()
     return response_helper.execute(Foods.getAll, res)
       .then(result => {
         result.stat.should.equal(200)
@@ -32,7 +17,7 @@ describe('Helper Tests', () => {
       })
   })
 
-  xit('with arguements', (done) => {
+  it('with arguements', (done) => {
 
   })
 

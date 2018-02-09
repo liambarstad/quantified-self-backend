@@ -22,7 +22,7 @@ describe('Foods Model Tests', () => {
       })
   })
 
-  it('can get all foods', (done) => {
+  it('can get all foods', () => {
     Foods.getAll()
       .then(foods => {
         foods.should.be.a('array')
@@ -30,7 +30,6 @@ describe('Foods Model Tests', () => {
         foods[0].should.have.property('id')
         foods[0].should.have.property('name')
         foods[0].should.have.property('calories')
-        done()
       })
   })
 
