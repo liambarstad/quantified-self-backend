@@ -1,22 +1,29 @@
-const build_response = (response, config = { stat: 200, err_code: 404 }) => {
-  return this.then(result => {
+const pry = require('pryjs')
+module.exports = class ResponseHelper {
+  constructor(config={}) {
+    this.success_code = config.success_code || 200
+    this.error_code = config.error_code || 404
+    this.int_error_code = config.int_error_code || 500
+  }
+
+  execute(callback, response, args=[]) {
+    return callback(...args)
+      .then(result => {
+        return this._buildSuccessful(result, response)
+      })
+      .catch(err => {
+        console.log('it really goofed doe')
+        return response.status(this.int_error_code)
+      })
+  }
+
+  _buildSuccessful(result, response) {
     if (result) {
-      return response.status(config.stat).json(result)
+      return response.status(this.success_code).json(result)
     } else {
-      return response.status(config.err_code)
+      return response.status(this.error_code)
     }
-  })
-  .catch(err => {
-    return response.status(config.err_code)
-  })
+  }
+
 }
 
-//const build_response = (result, response, config = { stat: 200, err_code: 404 }) => {
-  //if (result) {
-    //return response.status(config.stat).json(result)
-  //} else {
-    //return response.status(config.err_code)
-  //}
-//}
-
-module.exports = { build_response }

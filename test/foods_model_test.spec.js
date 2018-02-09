@@ -14,7 +14,7 @@ describe('Foods Model Tests', () => {
       })
   })
 
-  beforeEach((done) => {
+  beforeEach(done => {
     database.seed.run()
       .then(() => done())
       .catch(error => {
@@ -22,7 +22,7 @@ describe('Foods Model Tests', () => {
       })
   })
 
-  it('can get all foods', () => {
+  it('can get all foods', (done) => {
     Foods.getAll()
       .then(foods => {
         foods.should.be.a('array')
@@ -30,20 +30,22 @@ describe('Foods Model Tests', () => {
         foods[0].should.have.property('id')
         foods[0].should.have.property('name')
         foods[0].should.have.property('calories')
+        done()
       })
   })
 
-  it('can get a single food', () => {
+  it('can get a single food', (done) => {
     Foods.get(1)
       .then(food => {
         food.should.be.a('object')
         food.should.have.property('id')
         food.should.have.property('name')
         food.should.have.property('calories')
+        done()
       })
   })
 
-  it('can create a new food', () => {
+  it('can create a new food', (done) => {
     Foods.post('newFood', 600)
       .then(food => {
         food.should.be.a('object')
@@ -53,17 +55,11 @@ describe('Foods Model Tests', () => {
         food.id.should.be.a('number')
         food.name.should.equal('newFood')
         food.calories.should.equal(600)
-        Foods.get(food.id)
-          .then(food2 => {
-            food2.should.have.property('name')
-            food2.should.have.property('calories')
-            food2.name.should.equal('newFood')
-            food2.calories.should.equal(600)
-          })
+        done()
       })
   })
 
-  it('can update a food', () => {
+  it('can update a food', (done) => {
     Foods.update(1, 'newVersion', 700)
       .then(food => {
         food.should.be.a('object')
@@ -73,10 +69,11 @@ describe('Foods Model Tests', () => {
         food.id.should.equal(1)
         food.name.should.equal('newVersion')
         food.calories.should.equal(700)
+        done()
       })
   })
 
-  it('can delete a food', () => {
+  it('can delete a food', (done) => {
     Foods.destroy(2)
       .then(food => {
         food.should.be.a('object')
@@ -84,6 +81,7 @@ describe('Foods Model Tests', () => {
         food.should.have.property('name')
         food.should.have.property('calories')
         food.id.should.equal(2)
+        done()
       })
   })
 })
