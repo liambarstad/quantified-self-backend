@@ -5,11 +5,16 @@ class Res {
   }
   status(num) {
     this.stat = num
-      return this
+    return this
   }
   json(val) {
     this.body = val
-      return this
+    return this
+  }
+
+  send(val) {
+    this.message = val
+    return this
   }
 }
 

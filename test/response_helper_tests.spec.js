@@ -17,15 +17,22 @@ describe('Helper Tests', () => {
       })
   })
 
-  it('with arguements', (done) => {
-
+  it('with arguements', () => {
+    let response_helper = new ResponseHelper()
+    return response_helper.execute(Foods.get, res, [1])
+      .then(result => {
+        result.stat.should.equal(200)
+        result.body.should.be.a('object')
+        result.body.id.should.equal(1)
+      })
   })
 
-  xit('with invalid promise', (done) => {
-
-  })
-
-  xit('with erroring promise', (done) => {
-
+  it('with invalid promise', () => {
+    let response_helper = new ResponseHelper()
+    return response_helper.execute(Foods.get, res, [56])
+      .catch(result => {
+        result.stat.should.equal(404)
+        result.message.should.equal('Invalid')
+      })
   })
 })

@@ -13,8 +13,12 @@ const get = (id) => {
 }
 
 const post = (name, calories) => {
-  return database('foods').returning('*').insert({name: name, calories: calories, created_at: new Date})
-    .then(result => result[0])
+  if (name && calories) {
+    return database('foods').returning('*').insert({name: name, calories: calories, created_at: new Date})
+      .then(result => result[0])
+  } else {
+    return Promise.reject()
+  }
 }
 
 const update = (id, name, calories) => {
@@ -22,7 +26,7 @@ const update = (id, name, calories) => {
     return database('foods').returning('*').where('id', id).update({name: name, calories: calories})
       .then(result => result[0])
   } else {
-    return false
+    return Promise.reject()
   }
 }
 

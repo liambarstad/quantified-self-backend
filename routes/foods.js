@@ -10,10 +10,12 @@ router.get('/', function(req, res, next) {
 })
 
 router.post('/', function(req, res, next) {
-  let name = req.body.food.name;
-  let calories = req.body.food.calories;
+  let params = []
+  if (req.body.food) {
+    params.push(req.body.food.name, req.body.food.calories)
+  }
   let response = new ResponseHelper({error_code: 400})
-  return response.execute(Foods.post, res, [name, calories])
+  return response.execute(Foods.post, res, params)
 })
 
 router.get('/:id', function(req, res, next) {
@@ -22,11 +24,12 @@ router.get('/:id', function(req, res, next) {
 })
 
 router.patch('/:id', function(req, res, next) {
-  let id = req.params.id;
-  let name = req.body.food.name;
-  let calories = req.body.food.calories;
+  let params = []
+  if (req.body.food) {
+    params.push(req.params.id, req.body.food.name, req.body.food.calories)
+  }
   let response = new ResponseHelper({error_code: 400})
-  return response.execute(Foods.update, res, [id, name, calories])
+  return response.execute(Foods.update, res, params)
 })
 
 router.delete('/:id', function(req, res, next) {

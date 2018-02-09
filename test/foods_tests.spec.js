@@ -1,3 +1,4 @@
+const pry = require('pryjs')
 const chai = require('chai')
 const should = chai.should()
 const chaiHttp = require('chai-http')
@@ -41,7 +42,7 @@ describe('Foods API Routes', () => {
     it('with incorrect path', () => {
       return chai.request(app)
         .get('/sad_sad_path')
-        .then(response => {
+        .catch(response => {
           response.should.have.status(404)
         })
     })
@@ -64,7 +65,7 @@ describe('Foods API Routes', () => {
     it('with invalid ID', () => {
       return chai.request(app)
         .get('/api/v1/foods/435')
-        .then((response) => {
+        .catch(response => {
           response.should.have.status(404)
         })
     })
@@ -90,7 +91,7 @@ describe('Foods API Routes', () => {
       return chai.request(app)
         .post('/api/v1/foods')
         .send({ food: { name: 'namedWalrus' } })
-        .then(response => {
+        .catch(response => {
           response.should.have.status(400)
         })
     })
@@ -99,7 +100,7 @@ describe('Foods API Routes', () => {
       return chai.request(app)
         .post('/api/v1/foods')
         .send({ food: { calories: 400 } })
-        .then(response => {
+        .catch(response => {
           response.should.have.status(400)
         })
     })
@@ -108,7 +109,7 @@ describe('Foods API Routes', () => {
       return chai.request(app)
         .post('/api/v1/foods')
         .send({ thistle: true, walrus: 'definitely not' })
-        .then(response => {
+        .catch(response => {
           response.should.have.status(400)
         })
     })
@@ -116,7 +117,7 @@ describe('Foods API Routes', () => {
     it('with no info', () => {
       return chai.request(app)
         .post('/api/v1/foods')
-        .then(response => {
+        .catch(response => {
           response.should.have.status(400)
         })
     })
@@ -144,7 +145,7 @@ describe('Foods API Routes', () => {
           response.should.have.status(200)
           response.body.should.be.a('object')
           response.body.id.should.equal(1)
-          response.body.name.should.equal('newName')
+          response.body.name.should.equal('newerName')
           response.body.calories.should.equal(800)
         })
     })
@@ -166,7 +167,7 @@ describe('Foods API Routes', () => {
       return chai.request(app)
         .patch('/api/v1/foods/1')
         .send({ name: 'Taquito', calories: 1200 })
-        .then(response => {
+        .catch(response => {
           response.should.have.status(400)
         })
     })
@@ -174,7 +175,7 @@ describe('Foods API Routes', () => {
     it('with no info', () => {
       return chai.request(app)
         .patch('/api/v1/foods/1')
-        .then(response => {
+        .catch(response => {
           response.should.have.status(400)
         })
     })
@@ -197,7 +198,7 @@ describe('Foods API Routes', () => {
     it('with invalid ID', () => {
       return chai.request(app)
         .delete('/api/v1/foods/4242')
-        .then(response => {
+        .catch(response => {
           response.should.have.status(404)
         })
     })
