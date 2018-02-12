@@ -1,4 +1,3 @@
-const pry = require('pryjs')
 const chai = require('chai')
 const should = chai.should()
 const Foods = require('../models/foods')

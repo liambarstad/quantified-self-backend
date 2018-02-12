@@ -1,4 +1,3 @@
-const pry = require('pryjs')
 const chai = require('chai')
 const should = chai.should()
 const res = require('./test_helpers/response_mock')

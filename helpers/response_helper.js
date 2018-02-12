@@ -1,4 +1,3 @@
-const pry = require('pryjs')
 module.exports = class ResponseHelper {
   constructor(config={}) {
     this.success_code = config.success_code || 200
