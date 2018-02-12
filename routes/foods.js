@@ -1,4 +1,3 @@
-const pry = require('pryjs')
 const express = require('express');
 const router = express.Router();
 const Foods = require('../models/foods')
