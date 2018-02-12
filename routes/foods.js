@@ -4,7 +4,7 @@ const Foods = require('../models/foods')
 const ResponseHelper = require('../helpers/response_helper')
 
 router.get('/', function(req, res, next) {
-  let response = new ResponseHelper()
+  const response = new ResponseHelper()
   return response.execute(Foods.getAll, res)
 })
 
