@@ -3,6 +3,7 @@ var router = express.Router();
 const Meals = require('../models/meals')
 
 router.get('/', (req, res) => {
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
   Meals.allMeals()
   .then((data) => {
     if (data.rowCount == 0) {
@@ -18,6 +19,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:meal_id/foods', (req, res) => {
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
   const meal_id = req.params.meal_id
   Meals.mealsFoods(meal_id)
   .then((data) => {
@@ -30,6 +32,7 @@ router.get('/:meal_id/foods', (req, res) => {
 
 
 router.post('/:meal_id/foods/:id', (req, res) => {
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
   const meal_id = req.params.meal_id
   const food_id = req.params.id
   Meals.addFood(meal_id, food_id)
@@ -42,6 +45,7 @@ router.post('/:meal_id/foods/:id', (req, res) => {
 })
 
 router.delete('/:meal_id/foods/:id', (req, res) => {
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
   const meal_id = req.params.meal_id
   const food_id = req.params.id
   Meals.deleteFood(meal_id, food_id)

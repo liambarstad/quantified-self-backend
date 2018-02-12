@@ -6,7 +6,7 @@ module.exports = class ResponseHelper {
   }
 
   execute(callback, response, args=[]) {
-      response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
+    response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
     return callback(...args)
       .then(result => {
         return this._buildSuccessful(result, response)
